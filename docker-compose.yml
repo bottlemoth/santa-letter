@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+    postgres:
+        image: "postgres:14"
+        restart: always
+        env_file:
+            - .env
+        volumes:
+            - ./database:/var/lib/postgresql/data
+            - ./ddl:/ddl
+        ports:
+            - "5432:5432"
+    nginx:
+        image: nginx:latest
+        container_name: nginx
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./public:/usr/share/nginx/html
+        restart: always
