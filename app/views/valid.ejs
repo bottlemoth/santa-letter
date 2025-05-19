@@ -1,0 +1,10 @@
+<div class="wrapper">
+    <h1>Twoje zaklepane prezenty</h1>
+    <ol class = "lista-prezentow">
+        <% presents.forEach(element => { %>
+            <li class = "prezenty-row">
+                <a class="linki" href="<%= element.link %>"><%= element.opis %></a> 
+            </li>
+        <% }) %>
+    </ol>
+</div>

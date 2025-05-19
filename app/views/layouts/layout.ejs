@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>Santa-letter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    
+</head>
+<body>
+    
+    <% if (!hideSidebar) { %>
+        <%- include('../partials/sidebar') %>
+      <% } %>
+        
+ 
+ 
+    <div class="main">
+        <%- body %>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,38 @@
+
+<div class="card-header">
+
+</div>
+<div class="card-body">
+        <div class="card-body-colums">
+            <div class="card-body-left">
+                <h1>Mój prezent</h1>
+                <form action="/santa/" method="POST">
+                    <label for="link">Link</label><br>
+                    <input type="text" id="link"name="link"><br>
+                    <label for="opis">Opis</label><br>
+                    <input type="text" id="opis"name="opis"><br>
+                    <button class="btn btn-add" type="submit">Dodaj</button>
+                    
+                </form>
+            </div>
+            <div class="card-body-right">
+                
+                <h1>Moje prezenty</h1>
+                <ol class = "lista-prezentow">
+                    <% presents.forEach(element => { %>
+
+                        <li class = "prezenty-row">
+                            
+                            <a class="linki" href="<%= element.link %>"><%= element.opis %></a> 
+                        
+                            <form action="/santa/<%= element.id %>?_method=DELETE" method="POST">
+                                <button class="btn btn-delete" type="submit">&times;</button>
+                            </form>
+                        </li>
+                    <% }) %>
+                </ol>
+            </div>
+        </div>                                                            
+</div>
+
+

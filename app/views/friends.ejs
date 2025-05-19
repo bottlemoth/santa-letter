@@ -1,0 +1,38 @@
+<div class="wrapper">
+    <section class = "add-friend">
+        <form action="/friends" method="get">
+            <input type="text" name="username" >
+            <button type="submit">Szukaj</button>
+        </form>
+        <hr>
+            <ul>
+                <% users.forEach(element => { %>
+                    <li><%= element.username %></li>
+                    <form action="/friends" method="post">
+                        <input type="hidden" name="friends" value="<%= element.username %>">
+                        <button type="submit">Dodaj</button>
+                    </form>
+                        
+                <% }) %>
+                
+            </ul>
+    </section>
+    <section class ="list-Friends" style="display:inline;">
+        <ul>
+            <% friends.forEach(element => { %>
+            <li>
+                <%= element.friend_id %>
+                <form action="/friends/<%= element.friend_id %>" method="get">
+                    <button type="submit">Pokaż prezenty</button>
+                </form>   
+                <form action="/friends/<%= element.id %>?_method=DELETE" method="post">
+                    <button class="btn btn-delete" type="submit">&times;</button>
+                </form>
+            </li>
+            <% }) %>
+            
+        </ul>
+    </section>
+
+</div>
+

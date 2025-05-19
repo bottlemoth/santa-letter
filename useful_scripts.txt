@@ -1,0 +1,3 @@
+docker compose -f docker-compose-dev.yml up
+docker exec -it santa-letter-postgres-1 bash
+docker exec -it santa-letter-postgres-1 psql -U postgres -f /ddl/plik.sql

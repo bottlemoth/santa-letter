@@ -1,0 +1,34 @@
+<div class="header">
+    <h1>
+        prezent użytkownika <%= username %>
+    </h1>
+</div>
+<ul class="lista">
+  <% presents.forEach(p => { %>
+    <li>
+      <a href="<%= p.link %>" target="_blank"><%= p.opis %></a><br>
+      <% if (p.approved) { %>
+        <button class="approved-btn" disabled style="background-color: #ccc;">Zaklepano ✅</button>
+      <% } else { %>
+        <form 
+          action="/friends/<%= username %>/<%= p.id %>?_method=PUT" 
+          method="POST" 
+          class="approval-form" >
+
+          <button 
+            class="approved-btn" 
+            type="submit">
+            Zatwierdź
+          </button>
+        </form>
+      <% } %>
+    </li>
+  <% }); %>
+</ul>
+
+<!-- Tu pojawi się komunikat -->
+<div id="notification" style="margin-top: 1rem; color: green; font-weight: bold;"></div>
+
+<script>
+
+</script>
