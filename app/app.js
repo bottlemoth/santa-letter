@@ -23,6 +23,10 @@ app.use((req, res, next) => {
   res.locals.hideSidebar = false;
   next();
 });
+app.use((req, res, next) => {
+    res.locals.bodyClass = "";
+    next();
+});
 
 app.use(methodOverride('_method'))
 app.use(express.urlencoded({extended : false}))
@@ -37,6 +41,9 @@ import {router} from './routes/santa.js'
 app.use('/santa',router)
 import {validRouter} from './routes/presents.js'
 app.use('/valid',validRouter)
+import {MyPresentsRouter} from './routes/MyPresents.js'
+app.use('/Mypresent',MyPresentsRouter)
+
 
   app.listen(port,()=>{
     console.log(`Example app listening on port ${port}`)

@@ -1,0 +1,17 @@
+<div class="card-body-right">
+    
+        <ol class="lista-prezentow">
+            <% presents.forEach(element => { %>
+                <li class="prezenty-row">
+                    
+                    <a class="linki" href="<%= element.link %>"><%= element.opis %></a> 
+                
+                    <form class="dlt" action="/santa/<%= element.id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-delete" type="submit">&times;</button>
+                    </form>
+                </li>
+            <% }) %>
+        </ol>
+
+
+</div>

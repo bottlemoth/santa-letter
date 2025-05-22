@@ -11,7 +11,10 @@
                     <input type="text" id="link"name="link"><br>
                     <label for="opis">Opis</label><br>
                     <input type="text" id="opis"name="opis"><br>
-                    <button class="btn btn-add" type="submit">Dodaj</button>
+                    <button class="btn btn-add" type="submit">
+                    <span class="text-default">+</span>
+                    <span class="text-hover">Dodaj</span>
+                    </button>
                     
                 </form>
             </div>
@@ -25,7 +28,7 @@
                             
                             <a class="linki" href="<%= element.link %>"><%= element.opis %></a> 
                         
-                            <form action="/santa/<%= element.id %>?_method=DELETE" method="POST">
+                            <form class="dlt" action="/santa/<%= element.id %>?_method=DELETE" method="POST">
                                 <button class="btn btn-delete" type="submit">&times;</button>
                             </form>
                         </li>

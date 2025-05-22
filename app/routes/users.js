@@ -8,11 +8,13 @@ import {checkAuthenticated, checkNotAuthenticated} from '../auth.js'
 const UserRouter = express.Router()
 
 UserRouter.get('/register',checkNotAuthenticated('/santa'), (req, res) => {
-    return res.render('register',{formErrors: {},hideSidebar: true })
+    res.locals.bodyClass = "no-bg";
+    return res.render('register',{formErrors: {},hideSidebar: true, bodyClass: 'no-bg' })
 })
 
 UserRouter.post('/register',checkNotAuthenticated('/santa'),async (req, res) => {
     let formErrors = {}
+
     if(req.body.password.length < process.env.minPasswordLength){
         formErrors.password = `Password must be at least ${process.env.minPasswordLength} characters long`;
     }
@@ -29,7 +31,7 @@ UserRouter.post('/register',checkNotAuthenticated('/santa'),async (req, res) => 
     }
 
     if(Object.keys(formErrors).length > 0) {
-        return res.render('register',{formErrors: formErrors, hideSidebar: true  })
+        return res.render('register',{formErrors: formErrors, hideSidebar: true, bodyClass: 'no-bg'  })
     }
 
     // form is validate here
@@ -50,7 +52,8 @@ UserRouter.post('/register',checkNotAuthenticated('/santa'),async (req, res) => 
 })
 
 UserRouter.get('/login',checkNotAuthenticated('/santa'), (req, res) => {
-    return res.render('login', {formErrors: {},hideSidebar: true })
+    res.locals.bodyClass = "no-bg";
+    return res.render('login', {formErrors: {},hideSidebar: true, bodyClass: 'no-bg' })
 })
 
 UserRouter.post('/login',checkNotAuthenticated('/santa'), async (req, res) => {
@@ -74,14 +77,14 @@ UserRouter.post('/login',checkNotAuthenticated('/santa'), async (req, res) => {
 
     if(resp.rowCount === 0){
         formErrors.generalError = generalErrorMsg
-        return res.render('login', {formErrors: formErrors, hideSidebar: true })
+        return res.render('login', {formErrors: formErrors, hideSidebar: true,bodyClass: 'no-bg' })
     }
 
     const existingUser = resp.rows[0]
     const compare = await bcrypt.compare(req.body.password, existingUser.password)
     if(!compare){
         formErrors.generalError = generalErrorMsg
-        return res.render('login', {formErrors: formErrors, hideSidebar: true })
+        return res.render('login', {formErrors: formErrors, hideSidebar: true, bodyClass: 'no-bg' })
     }
 
     const updateResp = await authenticateSession.call(req, existingUser.id)

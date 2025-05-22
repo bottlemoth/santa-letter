@@ -31,8 +31,8 @@ friendRouter.get('/',checkAuthenticated(),  async (req,res)=>{
 
 friendRouter.get('/:username',checkAuthenticated(),async (req,res)=>{
     let resp
-
     const username = req.params.username;
+    
     if (!username) return res.render('profile',{presents: []} )
     try {
         resp = await pool.query(`
