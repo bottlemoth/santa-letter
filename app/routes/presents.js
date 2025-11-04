@@ -20,6 +20,23 @@ validRouter.get('/',checkAuthenticated(),async (req,res) => {
     }
     res.render('valid',{presents : pres.rows})
 })
-  
+
+validRouter.put('/:presentid',checkAuthenticated(),async (req,res) =>{
+    let pres
+    try {
+        await pool.query(`
+            DELETE FROM taken 
+            WHERE present_id = $1
+            `,[req.params.presentid])
+        pres = await pool.query(`
+            UPDATE presents 
+            SET approved = false 
+            WHERE id = $1
+            `,[req.params.presentid])
+    } catch (error) {
+        console.log(error)
+    }
+    return res.redirect('/valid')
+})
 
 export {validRouter}

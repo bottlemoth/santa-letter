@@ -1,38 +1,41 @@
-<div class="wrapper">
-    <section class = "add-friend">
-        <form action="/friends" method="get">
-            <input type="text" name="username" >
-            <button type="submit">Szukaj</button>
-        </form>
-        <hr>
+<div class="card-body">
+    <div class="card-body-colums">
+        <div class="card-body-left-friends">
             <ul>
-                <% users.forEach(element => { %>
-                    <li><%= element.username %></li>
-                    <form action="/friends" method="post">
-                        <input type="hidden" name="friends" value="<%= element.username %>">
-                        <button type="submit">Dodaj</button>
+                <% friends.forEach(element => { %>
+                <li>
+                    <%= element.friend_id %>
+                    <form action="/friends/<%= element.friend_id %>" method="get">
+                        <button type="submit">Pokaż prezenty</button>
+                    </form>   
+                    <form action="/friends/<%= element.id %>?_method=DELETE" method="post">
+                        <button class="btn btn-delete" type="submit">&times;</button>
                     </form>
-                        
+                </li>
                 <% }) %>
                 
             </ul>
-    </section>
-    <section class ="list-Friends" style="display:inline;">
-        <ul>
-            <% friends.forEach(element => { %>
-            <li>
-                <%= element.friend_id %>
-                <form action="/friends/<%= element.friend_id %>" method="get">
-                    <button type="submit">Pokaż prezenty</button>
-                </form>   
-                <form action="/friends/<%= element.id %>?_method=DELETE" method="post">
-                    <button class="btn btn-delete" type="submit">&times;</button>
+    
+        </div>
+        <div class="card-body-right-friends">
+                <form action="/friends" method="get">
+                    <input type="text" name="username" >
+                    <button type="submit">Szukaj</button>
                 </form>
-            </li>
-            <% }) %>
-            
-        </ul>
-    </section>
-
+            <hr>
+                <ul>
+                    <% users.forEach(element => { %>
+                        <li  class="friends-row"><%= element.username %>
+                            <form action="/friends" method="post">
+                                <input type="hidden" name="friends" value="<%= element.username %>">
+                                <button type="submit">Dodaj</button>
+                            </form>
+                            <% }) %>
+                        </li>
+                    
+                </ul>
+        </div>
+    </div>
 </div>
+
 

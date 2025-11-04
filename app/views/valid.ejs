@@ -1,10 +1,13 @@
 <div class="wrapper">
-    <h1>Twoje zaklepane prezenty</h1>
-    <ol class = "lista-prezentow">
+    <h1>Twoje zarezerwowane prezenty</h1>
+    <ol class = "resign-list">
         <% presents.forEach(element => { %>
-            <li class = "prezenty-row">
-                <a class="linki" href="<%= element.link %>"><%= element.opis %></a> 
-            </li>
-        <% }) %>
+            <li class = "prezenty-row-resign">
+                    <a class="linki" href="<%= element.link %>"><%= element.opis %></a> 
+            <form action="/valid/<%=element.id%>?_method=PUT" method="POST" >
+                    <button class="btn-resign" type="submit">Zrezygnuj</button>
+            </form>
+            <% }) %>
+        </li>
     </ol>
 </div>

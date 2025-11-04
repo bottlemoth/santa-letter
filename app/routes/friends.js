@@ -8,25 +8,30 @@ const friendRouter = express.Router()
 friendRouter.get('/',checkAuthenticated(),  async (req,res)=>{
     let users = { rows: [] }
     let friends = { rows: [] }
-    
+    console.log(req.query)
     try {
 
-        users = await pool.query(`
-            SELECT username
-            FROM users
-            WHERE username ILIKE '%' || $1 || '%'
-            AND id != $2
-            `, [req.query.username, req.session.user_id])
+    users = await pool.query(`
+        SELECT username
+        FROM users
+        WHERE username ILIKE '%' || $1 || '%'
+        AND username NOT IN (
+            SELECT friend_id
+            FROM friends
+            WHERE user_id = $2
+        )
+        AND id != $2
+    `, [req.query.username, req.session.user_id]);
+
         friends = await pool.query(`
             SELECT id, friend_id
             FROM friends
             WHERE user_id = $1
             `,[req.session.user_id])
-            
     }catch(e){
         console.log(e)
     }
-    return res.render('friends', { users: users.rows , friends: friends.rows });
+    return res.render('friends', {users: users.rows , friends: friends.rows });
 });
 
 friendRouter.get('/:username',checkAuthenticated(),async (req,res)=>{
@@ -45,7 +50,7 @@ friendRouter.get('/:username',checkAuthenticated(),async (req,res)=>{
     }catch(e){
         console.log(e)
     }
-    return res.render('profile',{presents : resp.rows, username : username} )
+    return res.render('profile',{formErrors: {},presents : resp.rows, username : username} )
 });
 
 friendRouter.post('/',checkAuthenticated(), async (req,res)=>{
@@ -82,6 +87,7 @@ friendRouter.put('/:username/:presentId',checkAuthenticated(), async (req,res) =
         await pool.query(`
             INSERT INTO taken(id, user_id, present_id)
             VALUES($1,$2,$3)
+            ON CONFLICT (user_id, present_id) DO NOTHING;
             `,[uuidv4(), req.session.user_id,presentId])
 
         await pool.query(`
